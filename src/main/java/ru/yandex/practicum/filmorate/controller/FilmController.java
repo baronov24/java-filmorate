@@ -89,11 +89,9 @@ public class FilmController {
         // проверяем выполнение необходимых условий
         checkFields(newFilm);
 
-        Film oldFilm = films.get(newFilm.getId());
-
         films.put(newFilm.getId(), newFilm);
 
         log.info("Фильм с id = {} обновлен", newFilm.getId());
-        return oldFilm;
+        return newFilm;
     }
 }

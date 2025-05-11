@@ -84,11 +84,9 @@ public class UserController {
         // проверяем выполнение необходимых условий
         checkFields(newUser);
 
-        User oldUser = users.get(newUser.getId());
-
         users.put(newUser.getId(), newUser);
 
         log.info("Пользователь с id = {} обновлен", newUser.getId());
-        return oldUser;
+        return newUser;
     }
 }
