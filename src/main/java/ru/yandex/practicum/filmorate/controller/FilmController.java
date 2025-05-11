@@ -53,7 +53,7 @@ public class FilmController {
             validation.append("Дата релиза — не раньше 28 декабря 1895 года. ");
         }
 
-        if (!film.getDuration().isPositive()) {
+        if (film.getDuration() <= 0) {
             validation.append("Продолжительность фильма должна быть положительным числом.");
         }
 

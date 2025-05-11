@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.yandex.practicum.filmorate.model.Film;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -24,7 +23,7 @@ public class FilmControllerTest {
                 " чтобы схватить Фрэнка и привлечь к ответственности за свои деяния," +
                 " но Фрэнк всегда опережает его на шаг, заставляя продолжать погоню.");
         film.setReleaseDate(LocalDate.of(2002, 12, 16));
-        film.setDuration(Duration.ofMinutes(141));
+        film.setDuration(141);
     }
 
     @Test
