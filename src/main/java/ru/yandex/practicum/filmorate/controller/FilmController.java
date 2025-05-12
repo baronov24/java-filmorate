@@ -7,9 +7,7 @@ import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.Film;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -18,19 +16,16 @@ public class FilmController {
     private final Map<Long, Film> films = new HashMap<>();
 
     @GetMapping
-    public Collection<Film> getAllFilms() {
-        return films.values();
+    public List<Film> getAllFilms() {
+        return new ArrayList<>(films.values());
     }
 
     @PostMapping
     public Film createFilm(@RequestBody Film film) {
-        // проверяем выполнение необходимых условий
         checkFields(film);
 
-        // формируем дополнительные данные
         film.setId(getNextId());
 
-        // сохраняем новый фильм в памяти приложения
         films.put(film.getId(), film);
 
         log.info("Добавлен новый фильм с id = {}", film.getId());
@@ -75,7 +70,6 @@ public class FilmController {
 
     @PutMapping
     public Film updateFilm(@RequestBody Film newFilm) {
-        // проверяем необходимые условия
         if (newFilm.getId() == null || newFilm.getId() == 0) {
             log.info("Запрос на изменение фильма без указания id");
             throw new ValidationException("Id должен быть указан");
@@ -86,7 +80,6 @@ public class FilmController {
             throw new NotFoundException("Фильм с id = " + newFilm.getId() + " не найден");
         }
 
-        // проверяем выполнение необходимых условий
         checkFields(newFilm);
 
         films.put(newFilm.getId(), newFilm);

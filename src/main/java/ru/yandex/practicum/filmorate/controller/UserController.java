@@ -8,9 +8,7 @@ import ru.yandex.practicum.filmorate.exception.ValidationException;
 import ru.yandex.practicum.filmorate.model.User;
 
 import java.time.LocalDate;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Slf4j
 @RestController
@@ -19,19 +17,16 @@ public class UserController {
     private final Map<Long, User> users = new HashMap<>();
 
     @GetMapping
-    public Collection<User> getAllUsers() {
-        return users.values();
+    public List<User> getAllUsers() {
+        return new ArrayList<>(users.values());
     }
 
     @PostMapping
     public User createUser(@Valid @RequestBody User user) {
-        // проверяем выполнение необходимых условий
         checkFields(user);
 
-        // формируем дополнительные данные
         user.setId(getNextId());
 
-        // сохраняем нового пользователя в памяти приложения
         users.put(user.getId(), user);
 
         log.info("Добавлен новый пользователь с id = {}", user.getId());
@@ -70,7 +65,6 @@ public class UserController {
 
     @PutMapping
     public User updateUser(@RequestBody User newUser) {
-        // проверяем необходимые условия
         if (newUser.getId() == null || newUser.getId() == 0) {
             log.info("Запрос на изменение пользователя без указания id");
             throw new ValidationException("Id должен быть указан");
@@ -81,7 +75,6 @@ public class UserController {
             throw new NotFoundException("Пользователь с id = " + newUser.getId() + " не найден");
         }
 
-        // проверяем выполнение необходимых условий
         checkFields(newUser);
 
         users.put(newUser.getId(), newUser);
